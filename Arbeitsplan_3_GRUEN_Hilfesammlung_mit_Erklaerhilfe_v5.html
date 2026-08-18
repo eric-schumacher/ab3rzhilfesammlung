@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Arbeitsplan 3 - rationale Zahlen - Hilfesammlung</title>
+  <style>
+    :root{
+      --plan-green:#D7E6C9;
+      --paper:#fbfdf8;
+      --paper-2:#f5faef;
+      --ink:#151515;
+      --muted:#53634c;
+      --good:#1f7a45;
+      --bad:#a73535;
+      --shadow:0 8px 20px rgba(53,78,43,.11);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;background:var(--plan-green);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+    body{min-height:100vh}
+    button{font:inherit}
+    .app{width:min(920px,100%);margin:0 auto;padding:clamp(18px,3vw,34px) clamp(14px,3vw,28px) 44px}
+    .topbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;min-height:42px}
+    .icon-btn{border:1.5px solid rgba(0,0,0,.45);background:rgba(255,255,255,.58);border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;min-height:44px}
+    .icon-btn:hover{background:rgba(255,255,255,.85)}
+    .spacer{flex:1}
+    h1{font-size:clamp(28px,5vw,48px);line-height:1.08;text-align:center;margin:18px auto 30px;max-width:850px;letter-spacing:-.6px}
+    h2{font-size:clamp(23px,4vw,34px);line-height:1.15;margin:0}
+    h3{font-size:clamp(20px,3vw,27px);margin:0}
+    .subtitle{text-align:center;color:var(--muted);font-size:16px;margin:-14px 0 26px}
+    .stack{display:grid;gap:14px}
+    .menu-btn,.task-btn,.part-btn{width:100%;text-align:left;border:1.6px solid rgba(0,0,0,.50);background:var(--paper);border-radius:var(--radius);padding:20px 22px;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s ease,box-shadow .12s ease,background .12s ease}
+    .menu-btn:hover,.task-btn:hover,.part-btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(53,78,43,.16);background:white}
+    .menu-btn strong,.task-btn strong,.part-btn strong{display:block;font-size:clamp(18px,3vw,24px);line-height:1.2}
+    .menu-btn span,.task-btn span,.part-btn span{display:block;margin-top:6px;color:var(--muted);font-size:14px;line-height:1.35}
+    .card{background:rgba(251,253,248,.94);border:1.6px solid rgba(0,0,0,.36);border-radius:22px;padding:clamp(20px,4vw,34px);box-shadow:var(--shadow)}
+    .task-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px}
+    .task-head .grow{flex:1}
+    .mini-note{display:inline-block;margin-top:8px;padding:6px 9px;border-radius:9px;background:#edf6e6;color:#3f5b36;font-size:13px;font-weight:700}
+    .source-note{margin:16px 0 0;padding:12px 14px;border-radius:12px;background:#fff4da;border:1px solid rgba(130,83,0,.28);font-size:14px;line-height:1.4;color:#6d4a12}
+    .progress-wrap{margin:18px 0 22px}
+    .progress-meta{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-bottom:7px}
+    .progress{height:9px;border-radius:999px;background:rgba(0,0,0,.10);overflow:hidden}
+    .progress > div{height:100%;background:#242424;border-radius:999px;transition:width .25s ease}
+    .question{font-size:clamp(22px,3.5vw,31px);line-height:1.25;font-weight:800;margin:12px 0 12px}
+    .help-row{display:flex;justify-content:center;margin:30px 0 8px}
+    .help-row[hidden]{display:none !important}
+    .help-btn{border:1.6px solid rgba(0,0,0,.48);background:rgba(255,255,255,.62);border-radius:14px;padding:12px 16px;font-weight:800;cursor:pointer;min-height:46px;box-shadow:0 4px 12px rgba(0,0,0,.06);transition:transform .1s ease,background .12s ease}
+    .help-btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.9)}
+    .help-btn[aria-expanded="true"]{background:#fff;color:#111}
+    .easy-help{display:none;margin:12px 0 8px;border:1.5px dashed rgba(0,0,0,.42);border-radius:16px;background:rgba(255,255,255,.72);padding:17px 18px 16px;line-height:1.45}
+    .easy-help.show{display:block;animation:fadeIn .18s ease}
+    .easy-help-title{font-weight:900;font-size:18px;margin-bottom:6px}
+    .easy-help-text{font-size:16px}
+    .easy-help-note{margin-top:11px;font-size:13px;color:var(--muted);font-weight:700}
+    .solution-box{margin:13px 0 6px;padding:13px 14px;border:2px solid rgba(0,0,0,.42);border-radius:13px;background:#fff;text-align:center}
+    .solution-label{font-size:13px;font-weight:800;color:var(--muted);margin-bottom:4px}
+    .solution-answer{font-size:clamp(20px,3vw,27px);font-weight:900;line-height:1.2}
+    .helper-caption{text-align:center;font-size:13px;font-weight:800;color:var(--muted);margin-top:7px}
+    .helper-visual{margin:12px auto 2px;max-width:520px;border-radius:13px;background:rgba(255,255,255,.68);padding:9px 10px;border:1px solid rgba(0,0,0,.12)}
+    .helper-visual svg{display:block;width:100%;height:auto;overflow:visible}
+    .mini-steps{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:7px;align-items:center;text-align:center;font-size:13px;font-weight:800}
+    .mini-step{padding:9px 7px;border:1px solid rgba(0,0,0,.24);border-radius:10px;background:white}
+    .mini-arrow{font-size:20px;font-weight:900}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+    .thinking{min-height:42px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700;margin:14px 0 6px;text-align:center}
+    .countdown{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;margin-left:8px;border-radius:50%;border:2px solid rgba(0,0,0,.55);color:#111;background:rgba(255,255,255,.55)}
+    .answers{display:grid;gap:11px;margin-top:12px}
+    .answer-btn{width:100%;border:1.6px solid rgba(0,0,0,.55);border-radius:14px;background:white;padding:16px 17px;cursor:pointer;text-align:left;font-weight:700;font-size:17px;line-height:1.3;min-height:57px;transition:transform .08s ease,background .12s ease,border-color .12s ease}
+    .answer-btn:hover{transform:translateY(-1px);background:#f8fbf4}
+    .answer-btn:disabled{cursor:default;transform:none}
+    .answer-btn.good{border-color:var(--good);background:#e9f7ef;color:#145a32}
+    .answer-btn.bad{animation:shake .26s linear;border-color:var(--bad);background:#fff0f0}
+    @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+    .feedback{min-height:40px;margin-top:13px;padding:0 2px;font-weight:700;line-height:1.35}
+    .feedback.good{color:var(--good)}
+    .feedback.bad{color:var(--bad)}
+    .success{text-align:center;padding:12px 0 4px}
+    .success .star{font-size:56px;line-height:1;margin-bottom:10px}
+    .success h3{font-size:30px;margin-bottom:8px}
+    .success p{color:var(--muted);font-size:17px;line-height:1.45;max-width:620px;margin:0 auto 20px}
+    .primary{border:1.6px solid #111;background:#111;color:white;border-radius:14px;padding:14px 20px;font-weight:800;cursor:pointer;min-height:50px}
+    .primary:hover{background:#292929}
+    .part-intro{color:var(--muted);line-height:1.5;margin:6px 0 18px}
+    .footer{margin-top:28px;text-align:center;color:#576a50;font-size:12px;line-height:1.45}
+    @media (max-width:560px){
+      .app{padding-left:12px;padding-right:12px}
+      h1{margin-top:8px}
+      .menu-btn,.task-btn,.part-btn{padding:17px 16px}
+      .card{padding:19px 16px}
+      .answer-btn{font-size:16px;padding:14px}
+      .topbar{margin-bottom:10px}
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app" aria-live="polite"></main>
+
+  <script>
+  (() => {
+    const chapters = [
+      {
+        id:'zahlstrahl',
+        title:'Rationale Zahlen am Zahlenstrahl',
+        tasks:[
+          {id:'s11n5gr', label:'Buch S. 11 Nr. 5 gr.', note:'Päckchenregel: In der Hilfe betrachten wir nur den ersten Pfeil A aus Teil a).'},
+          {id:'s11n6gr', label:'Buch S. 11 Nr. 6 a) + c) + d) gr.', note:'Päckchenregel: Wir betrachten exemplarisch nur den ersten Wert aus Teil a).'},
+          {id:'s42n26a', label:'Buch S. 42 Nr. 26 a)', note:'Päckchenregel: Wir betrachten nur den ersten markierten Punkt A.'},
+          {id:'s13n6', label:'Buch S. 13 Nr. 6', note:'Hier kannst du zwischen Teil a), b) und c) wählen.'}
+        ]
+      },
+      {
+        id:'vergleichen',
+        title:'Rationale Zahlen vergleichen und ordnen',
+        tasks:[
+          {id:'s14n4', label:'Buch S. 14 Nr. 4', note:'Päckchenregel: Wir betrachten nur Teil a).'},
+          {id:'s15n5gr', label:'Buch S. 15 Nr. 5 a) – d) gr.', note:'Päckchenregel: Wir betrachten nur Teil a).'},
+          {id:'s16n11or', label:'Buch S. 16 Nr. 11 or. (Tipp: Hilfesammlung)', note:'Hier kannst du zwischen Teil a), b) und c) wählen.'}
+        ]
+      },
+      {
+        id:'zunahme',
+        title:'Zunahme und Abnahme am Zahlenstrahl',
+        tasks:[
+          {id:'s18n3gr', label:'Buch S. 18 Nr. 3 a) + b) + d) gr.', note:'Päckchenregel: Wir betrachten nur Teil a).'},
+          {id:'s19n3', label:'Buch S. 19 Nr. 3'},
+          {id:'s19n4', label:'Buch S. 19 Nr. 4'},
+          {id:'s18n5ab', label:'Buch S. 18 Nr. 5 a) + b)', note:'Wähle die Teilaufgabe, zu der du Hilfe brauchst.'}
+        ]
+      },
+      {
+        id:'vertiefung',
+        title:'Vertiefung & Textaufgaben',
+        tasks:[
+          {id:'s22n11or', label:'Buch S. 22 Nr. 11 or.'},
+          {id:'s16n10or', label:'Buch S. 16 Nr. 10 or.', note:'Päckchenregel: Wir üben die Methode exemplarisch an der ersten Tabellenzeile (Aachen).'},
+          {id:'s41n23', label:'Buch S. 41 Nr. 23'},
+          {id:'s41n25', label:'Buch S. 41 Nr. 25'}
+        ]
+      }
+    ];
+
+    const flows = {
+      s11n5gr:{
+        focus:'Fokus: grüne Aufgabe 5, Teil a), nur der erste Pfeil A.',
+        questions:[
+          q('Schau auf den Abschnitt zwischen −3 und −2. In wie viele gleich große kleine Schritte ist eine ganze Einheit geteilt?', ['In 10 Schritte','In 5 Schritte','In 2 Schritte'], 0, 'Zähle die kleinen Abstände zwischen zwei benachbarten ganzen Zahlen.'),
+          q('Wie groß ist damit ein kleiner Schritt?', ['0,1','1','0,5'], 0, 'Eine ganze Einheit wird gleichmäßig auf 10 Schritte verteilt.'),
+          q('Pfeil A liegt einen kleinen Schritt rechts von −3. Was passiert mit einer Zahl, wenn du auf der Zahlengeraden nach rechts gehst?', ['Sie wird größer','Sie wird kleiner','Sie bleibt gleich'], 0, 'Auf der Zahlengeraden werden die Zahlen nach rechts größer.'),
+          q('Auf welche Zahl zeigt Pfeil A?', ['−2,9','−3,1','+2,9'], 0, 'Gehe von −3 genau einen Schritt der Größe 0,1 nach rechts.')
+        ]
+      },
+      s11n6gr:{
+        focus:'Fokus: grüne Aufgabe 6. Als Beispiel betrachten wir nur den ersten Wert aus a): −20. Die übrigen Werte löst du anschließend mit derselben Idee.',
+        questions:[
+          q('Für Teil a) kommen Werte von −50 bis +40 vor. Was sollte deine Zahlengerade deshalb mindestens zeigen?', ['Den Bereich von −50 bis +40','Nur den Bereich von 0 bis +40','Nur den Bereich von −20 bis 0'], 0, 'Orientiere dich am kleinsten und am größten vorkommenden Wert.'),
+          q('Welche Einteilung ist für diese Zahlen besonders günstig und übersichtlich?', ['10er-Schritte','3er-Schritte','100er-Schritte'], 0, 'Viele Werte liegen auf glatten Zehnern oder dazwischen.'),
+          q('Auf welcher Seite der 0 liegt der erste Wert −20?', ['Links von 0','Rechts von 0','Genau auf 0'], 0, 'Das Minuszeichen zeigt dir die Seite der 0.'),
+          q('Wo trägst du −20 bei einer 10er-Einteilung ein?', ['Zwei 10er-Schritte links von 0','Zwei 10er-Schritte rechts von 0','Fünf 10er-Schritte links von 0'], 0, 'Zähle vom Nullpunkt aus in die negative Richtung.')
+        ]
+      },
+      s42n26a:{
+        sourceWarning:'Die Buchseiten-PDF enthält die Buchseite 42 nicht. Die Hilfe zu Nr. 26 a) ist deshalb anhand des mitgelieferten Lösungsteils aufgebaut. Nutze für die Skala die Abbildung in deinem Buch.',
+        focus:'Fokus: Teil a), nur der erste markierte Punkt A.',
+        questions:[
+          q('Schau in deinem Buch auf Punkt A. Liegt A links oder rechts von der 0?', ['Links von der 0','Rechts von der 0','Genau auf der 0'], 0, 'Vergleiche die Position von A direkt mit der 0 auf der Zahlengeraden.'),
+          q('Welches Vorzeichen muss die Zahl bei A deshalb haben?', ['Ein Minuszeichen','Ein Pluszeichen','Kein Vorzeichen, weil A gleich 0 ist'], 0, 'Zahlen links von 0 sind negativ.'),
+          q('Welchen Abstand von 0 liest du für A an der Einteilung ab?', ['15','5','10'], 0, 'Zähle die Abstände anhand der beschrifteten Skala in deinem Buch.'),
+          q('Welche Zahl ist bei A markiert?', ['−15','−5','+15'], 0, 'Verbinde den abgelesenen Abstand mit dem richtigen Vorzeichen.')
+        ]
+      },
+      s13n6:{
+        parts:{
+          a:{title:'Teil a)', focus:'Der erste Eckpunkt ist A(0|1). Gesucht ist die Lage des 10. Eckpunkts.', questions:[
+            q('Wie solltest du die Eckpunkte zählen?', ['A ist Punkt 1 und jeder weitere rote Eckpunkt zählt genau einmal','A ist Punkt 0 und nur Punkte auf den Achsen zählen','Nur die äußeren Eckpunkte zählen'], 0, 'Die Aufgabenstellung nennt A ausdrücklich als ersten Punkt.'),
+            q('Wenn du die Eckpunkte der Spirale weiterzählst: Welche Punktnummern liegen jeweils auf der negativen x-Achse?', ['2, 6, 10, …','1, 5, 9, …','4, 8, 12, …'], 0, 'Zwischen zwei solchen Punkten liegen jeweils vier Eckpunkte.'),
+            q('Was passiert bei diesen Punkten mit der x-Koordinate, während die y-Koordinate 0 bleibt?', ['Die x-Koordinate wird jeweils um 1 kleiner','Die x-Koordinate wird jeweils um 2 größer','Die x-Koordinate bleibt immer −1'], 0, 'Vergleiche den 2. und den 6. Punkt auf der negativen x-Achse.'),
+            q('Welche Koordinaten hat der 10. Eckpunkt?', ['(−3|0)','(0|−3)','(3|0)'], 0, 'Der 10. Punkt ist der dritte Punkt dieser Folge auf der negativen x-Achse.')
+          ]},
+          b:{title:'Teil b)', focus:'Die Spirale wird einige Runden fortgesetzt. Gesucht ist die Lage des 20. Eckpunkts.', questions:[
+            q('Die Eckpunkte 4, 8, 12, 16, 20, … liegen immer auf derselben Seite der Spirale. Welche ist das?', ['Die rechte Seite','Die linke Seite','Die positive y-Achse'], 0, 'Zähle ab A die Eckpunkte in Viererschritten.'),
+            q('Welche y-Koordinate haben diese rechten Eckpunkte in der Zeichnung?', ['0,5','0','1'], 0, 'Lies die halbe Einheit zwischen y=0 und y=1 ab.'),
+            q('Wie verändert sich ihre x-Koordinate von einem solchen Eckpunkt zum nächsten?', ['Sie wird jeweils um 1 größer','Sie wird jeweils um 1 kleiner','Sie bleibt gleich'], 0, 'Jede weitere Runde der Spirale erweitert sich um eine Einheit.'),
+            q('Wo liegt der 20. Eckpunkt?', ['(5,5|0,5)','(5|0)','(0,5|5,5)'], 0, 'Der 20. Punkt ist der fünfte Eckpunkt dieser wiederkehrenden rechten Position.')
+          ]},
+          c:{title:'Teil c)', focus:'Nutze das Muster aus der Spirale, um den 100. Eckpunkt ohne Weiterzeichnen zu bestimmen.', questions:[
+            q('Der 20. und der 100. Eckpunkt haben bei der Division durch 4 denselben Rest. Was bedeutet das für ihre Lage im Muster?', ['Sie liegen auf derselben wiederkehrenden Seite der Spirale','Sie liegen auf gegenüberliegenden Seiten','Der 100. Punkt liegt auf der y-Achse'], 0, 'Alle vier Eckpunkte wiederholt sich die Art der Position.'),
+            q('Wie viele Viererschritte liegen zwischen dem 20. und dem 100. Eckpunkt?', ['20','80','25'], 0, 'Berechne (100 − 20) : 4.'),
+            q('Beim 20. Eckpunkt ist x = 5,5. Um wie viel wächst x bis zum 100. Eckpunkt?', ['Um 20','Um 4','Um 80'], 0, 'Jeder Viererschritt vergrößert die x-Koordinate dieser Position um 1.'),
+            q('Welche Koordinaten hat der 100. Eckpunkt?', ['(25,5|0,5)','(20,5|0,5)','(5,5|20,5)'], 0, 'Addiere die 20 Einheiten zur x-Koordinate des 20. Eckpunkts; y bleibt gleich.')
+          ]}
+        }
+      },
+      s14n4:{
+        focus:'Fokus: Teil a): □ < 2,6 < □. Gesucht sind die beiden benachbarten ganzen Zahlen.',
+        questions:[
+          q('Ist 2,6 größer oder kleiner als 2?', ['Größer als 2','Kleiner als 2','Genau gleich 2'], 0, 'Die Nachkommastelle 0,6 liegt über 0.'),
+          q('Ist 2,6 schon größer als 3?', ['Nein, 2,6 ist kleiner als 3','Ja, 2,6 ist größer als 3','2,6 ist gleich 3'], 0, 'Vergleiche die Einerstelle und die Nachkommastelle.'),
+          q('Welche beiden ganzen Zahlen gehören in die Lücken?', ['2 < 2,6 < 3','3 < 2,6 < 4','1 < 2,6 < 2'], 0, 'Gesucht sind die unmittelbar kleinere und die unmittelbar größere ganze Zahl.')
+        ]
+      },
+      s15n5gr:{
+        focus:'Fokus: grüne Aufgabe 5, Teil a): −7,6 □ 6,7.',
+        questions:[
+          q('Welche Vorzeichen haben die beiden Zahlen?', ['Die erste ist negativ, die zweite positiv','Beide sind negativ','Beide sind positiv'], 0, 'Achte auf das Minuszeichen vor 7,6.'),
+          q('Wo liegt eine negative Zahl im Vergleich zu einer positiven Zahl auf der Zahlengeraden?', ['Weiter links','Weiter rechts','Immer am selben Punkt'], 0, 'Die 0 trennt negative und positive Zahlen.'),
+          q('Welches Vergleichszeichen gehört in Teil a)?', ['−7,6 < 6,7','−7,6 > 6,7','−7,6 = 6,7'], 0, 'Die weiter links liegende Zahl ist die kleinere.')
+        ]
+      },
+      s16n11or:{
+        parts:{
+          a:{title:'Teil a)', focus:'Mit den Karten 2, 8, 6 und dem Minuszeichen werden dreistellige negative Zahlen gelegt. Gesucht ist die kleinste.', questions:[
+            q('Bei negativen Zahlen: Welche Zahl ist kleiner?', ['Die Zahl mit dem größeren Betrag','Die Zahl mit dem kleineren Betrag','Immer die Zahl mit der kleineren Einerziffer'], 0, 'Vergleiche z. B. −8 und −2 auf der Zahlengeraden.'),
+            q('Wie muss deshalb der Betrag der gesuchten dreistelligen Zahl sein?', ['Möglichst groß','Möglichst klein','Genau 268'], 0, 'Je weiter links die negative Zahl liegt, desto kleiner ist sie.'),
+            q('Wie ordnest du 2, 8 und 6, damit die größte positive dreistellige Zahl entsteht?', ['862','826','268'], 0, 'Setze die größte Ziffer an die Hunderterstelle.'),
+            q('Wie heißt die kleinste mögliche negative Zahl?', ['−862','−268','−826'], 0, 'Setze vor die größtmögliche dreistellige Zahl das Minuszeichen.')
+          ]},
+          b:{title:'Teil b)', focus:'Mit denselben Karten wird nun die größte mögliche negative Zahl gesucht.', questions:[
+            q('Welche negative Zahl ist größer?', ['Die, die näher an 0 liegt','Die mit dem größten Betrag','Die mit der größten Hunderterziffer'], 0, 'Auf der Zahlengeraden ist die weiter rechts liegende Zahl größer.'),
+            q('Wie muss der Betrag der gesuchten Zahl deshalb sein?', ['Möglichst klein','Möglichst groß','Genau 862'], 0, 'Eine negative Zahl mit kleinem Betrag liegt näher an 0.'),
+            q('Wie ordnest du 2, 8 und 6 zur kleinsten positiven dreistelligen Zahl?', ['268','286','628'], 0, 'Beginne mit der kleinsten Ziffer und ordne weiter aufsteigend.'),
+            q('Wie heißt die größte mögliche negative Zahl?', ['−268','−862','−628'], 0, 'Die negative Zahl mit dem kleinsten Betrag liegt am weitesten rechts.')
+          ]},
+          c:{title:'Teil c)', focus:'Jetzt sollen alle möglichen dreistelligen negativen Zahlen notiert und geordnet werden.', questions:[
+            q('Wie viele verschiedene dreistellige Zahlen kannst du mit den drei verschiedenen Ziffern 2, 8 und 6 bilden?', ['6','3','9'], 0, 'Für die erste Stelle gibt es 3, für die zweite 2 und für die letzte 1 Möglichkeit.'),
+            q('Wenn du negative Zahlen aufsteigend ordnest, mit welcher Hunderterziffer beginnen die kleinsten Zahlen?', ['Mit 8','Mit 2','Mit 6'], 0, 'Die kleinsten negativen Zahlen haben hier den größten Betrag.'),
+            q('Welche Gruppenfolge ist richtig?', ['Zuerst die 8xx-, dann die 6xx-, dann die 2xx-Zahlen','Zuerst 2xx, dann 6xx, dann 8xx','Zuerst 6xx, dann 2xx, dann 8xx'], 0, 'Denke daran, dass alle Zahlen ein Minuszeichen haben.'),
+            q('Welche vollständige Reihenfolge ist richtig?', ['−862 < −826 < −682 < −628 < −286 < −268','−268 < −286 < −628 < −682 < −826 < −862','−862 < −682 < −826 < −286 < −628 < −268'], 0, 'Ordne innerhalb jeder Hundertergruppe ebenfalls nach dem Betrag.')
+          ]}
+        }
+      },
+      s18n3gr:{
+        focus:'Fokus: grüne Aufgabe 3, Teil a). Start bei −5, Änderung +4.',
+        questions:[
+          q('Was bedeutet die Änderung +4 auf der Zahlengeraden?', ['4 Schritte nach rechts','4 Schritte nach links','Bei −5 stehen bleiben'], 0, 'Eine positive Änderung bedeutet Bewegung in positive Richtung.'),
+          q('Du startest bei −5. Nach einem Schritt nach rechts bist du bei …', ['−4','−6','+4'], 0, 'Nach rechts werden die Zahlen jeweils um 1 größer.'),
+          q('Wenn du vier Schritte nach rechts gehst: Erreichst oder überschreitest du schon die 0?', ['Nein, du bleibst noch links von 0','Ja, du landest rechts von 0','Du landest genau auf 0'], 0, 'Von −5 bis 0 sind es fünf Schritte.'),
+          q('Welcher Wert gehört in das Kästchen?', ['−1','+1','−9'], 0, 'Starte bei −5 und gehe vier Schritte nach rechts.')
+        ]
+      },
+      s19n3:{
+        focus:'Leni startet bei −2, geht 4 Schritte negativ, danach 10 Schritte positiv und möchte nach der nächsten Bewegung bei 0 stehen.',
+        questions:[
+          q('Wo steht Leni nach 4 Schritten in negative Richtung, wenn sie bei −2 startet?', ['Bei −6','Bei +2','Bei −4'], 0, 'Negative Richtung bedeutet vier Schritte nach links.'),
+          q('Von −6 geht sie 10 Schritte in positive Richtung. Wo steht sie danach?', ['Bei +4','Bei −16','Bei +6'], 0, 'Gehe sechs Schritte bis 0 und dann noch vier weiter.'),
+          q('Von +4 aus: In welche Richtung muss Leni gehen, um zur 0 zu kommen?', ['In negative Richtung','In positive Richtung','Sie ist schon bei 0'], 0, 'Die 0 liegt links von +4.'),
+          q('Wie muss sie weitergehen, damit sie nach der nächsten Bewegung auf der 0 steht?', ['4 Schritte in negative Richtung','4 Schritte in positive Richtung','6 Schritte in negative Richtung'], 0, 'Bestimme den Abstand von +4 zur 0 und die richtige Richtung.')
+        ]
+      },
+      s19n4:{
+        focus:'Jakob steht nach drei Bewegungen bei −7. Vorher ging er +3, dann −4 und danach −5 Schritte. Gesucht ist sein Startpunkt.',
+        questions:[
+          q('Wenn du den Startpunkt suchst, was ist eine gute Strategie?', ['Die Bewegungen vom Endpunkt aus rückwärts machen','Alle Bewegungen noch einmal in gleicher Richtung machen','Nur die letzte Bewegung betrachten'], 0, 'Rückwärtsrechnen macht jede Bewegung mit der Gegenrichtung rückgängig.'),
+          q('Die letzte Bewegung war 5 Schritte negativ. Wie machst du sie von −7 aus rückgängig?', ['5 Schritte positiv bis −2','5 Schritte negativ bis −12','3 Schritte positiv bis −4'], 0, 'Die Gegenrichtung zu negativ ist positiv.'),
+          q('Davor ging Jakob 4 Schritte negativ. Wo landest du beim Rückwärtsrechnen nach 4 Schritten positiv von −2 aus?', ['Bei +2','Bei −6','Bei +6'], 0, 'Gehe von −2 vier Schritte nach rechts.'),
+          q('Ganz am Anfang ging Jakob 3 Schritte positiv. Wo ist er also gestartet?', ['Bei −1','Bei +5','Bei −5'], 0, 'Mache auch die erste Bewegung rückgängig: von +2 drei Schritte negativ.')
+        ]
+      },
+      s18n5ab:{
+        parts:{
+          a:{title:'Teil a)', focus:'Ein Pinguin taucht 500 m tief, ein Wal 2250 m tief. Gesucht ist die Differenz.', questions:[
+            q('Wie kannst du Tiefen unter dem Meeresspiegel als rationale Zahlen schreiben?', ['Pinguin −500 m, Wal −2250 m','Pinguin +500 m, Wal +2250 m','Pinguin 0 m, Wal −1750 m'], 0, 'Unter dem Meeresspiegel werden die Werte negativ dargestellt.'),
+            q('Was bedeutet „Differenz“ hier anschaulich?', ['Den Abstand zwischen den beiden Tiefen','Die beiden Tiefen einfach mit ihren Minuszeichen addieren','Nur die tiefere Zahl abschreiben'], 0, 'Gesucht ist, wie viel tiefer der Wal kommt als der Pinguin.'),
+            q('Wie groß ist die Differenz der Tauchtiefen?', ['1750 m','2750 m','2250 m'], 0, 'Bestimme den Abstand zwischen −500 und −2250.')
+          ]},
+          b:{title:'Teil b)', focus:'Beim Abflug beträgt die Temperatur −5,5 °C. In Mallorca ist es 17 °C wärmer.', questions:[
+            q('Welche Änderung beschreibt „17 °C wärmer“?', ['+17 °C','−17 °C','0 °C'], 0, 'Wärmer bedeutet eine Zunahme.'),
+            q('Was passiert, wenn du von −5,5 °C um 17 °C wärmer wirst?', ['Du überschreitest 0 °C','Du bleibst unter −10 °C','Die Temperatur bleibt unverändert'], 0, 'Bis 0 fehlen nur 5,5 °C; die Zunahme ist deutlich größer.'),
+            q('Welche Temperatur herrscht in Mallorca?', ['+11,5 °C','−22,5 °C','+22,5 °C'], 0, 'Rechne −5,5 + 17.')
+          ]}
+        }
+      },
+      s22n11or:{
+        focus:'Die Mitgliederentwicklung lautet: Januar −26, Februar +31, März −17. Gesucht ist die Veränderung bis Ende März.',
+        questions:[
+          q('Was bedeutet der Wert −26 im Januar?', ['Es sind 26 Mitglieder weniger geworden','Es sind 26 Mitglieder dazugekommen','Der Verein hat genau 26 Mitglieder'], 0, 'Das Vorzeichen beschreibt die Veränderung, nicht die Gesamtzahl.'),
+          q('Welche Zwischenveränderung ergibt sich nach Januar und Februar zusammen?', ['+5','−57','+57'], 0, 'Rechne −26 + 31.'),
+          q('Im März kommen noch −17 dazu. Ist die Gesamtveränderung danach positiv oder negativ?', ['Negativ','Positiv','Genau 0'], 0, 'Ziehe 17 von deinem Zwischenstand +5 ab.'),
+          q('Wie hat sich die Mitgliederzahl bis Ende März insgesamt verändert?', ['Um 12 Mitglieder verringert (−12)','Um 12 Mitglieder erhöht (+12)','Um 5 Mitglieder erhöht (+5)'], 0, 'Berechne −26 + 31 − 17 und deute das Vorzeichen.')
+        ]
+      },
+      s16n10or:{
+        focus:'Fokus: erste Tabellenzeile Aachen mit −20,4 °C. Die Methode kannst du danach auf die übrigen Orte übertragen.',
+        questions:[
+          q('Zwischen welchen beiden ganzen Temperaturen liegt −20,4 °C?', ['Zwischen −21 °C und −20 °C','Zwischen −20 °C und −19 °C','Zwischen −22 °C und −21 °C'], 0, 'Auf der Zahlengeraden liegt −20,4 etwas links von −20.'),
+          q('Wie groß ist der Abstand von −20,4 zu −20 und zu −21?', ['0,4 zu −20 und 0,6 zu −21','0,6 zu −20 und 0,4 zu −21','Jeweils 1,0'], 0, 'Vergleiche die Differenzen zu den beiden benachbarten ganzen Zahlen.'),
+          q('Zu welcher ganzen Zahl liegt −20,4 näher?', ['Zu −20','Zu −21','Zu 0'], 0, 'Wähle die Zahl mit dem kleineren Abstand.'),
+          q('Welche gerundete Temperatur trägst du für Aachen auf der Zahlengeraden ein?', ['−20 °C','−21 °C','+20 °C'], 0, 'Runde auf die nähere ganze Zahl.')
+        ]
+      },
+      s41n23:{
+        focus:'Am Nordpol liegt der Meeresboden 4261 m unter dem Meeresspiegel. Der Elbrus ist 5642 m hoch. Gesucht ist der Höhenunterschied.',
+        questions:[
+          q('Welche rationale Zahl beschreibt 4261 m unter dem Meeresspiegel?', ['−4261 m','+4261 m','0 m'], 0, 'Unter dem Meeresspiegel entspricht einem negativen Wert.'),
+          q('Welche rationale Zahl beschreibt die Höhe des Elbrus über dem Meeresspiegel?', ['+5642 m','−5642 m','+4261 m'], 0, 'Über dem Meeresspiegel entspricht einem positiven Wert.'),
+          q('Welche Rechnung bestimmt den Abstand zwischen +5642 m und −4261 m?', ['5642 − (−4261)','5642 − 4261','−4261 − 5642'], 0, 'Ein Höhenunterschied ist der Abstand der beiden Werte auf der Zahlengeraden.'),
+          q('Wie groß ist der Höhenunterschied?', ['9903 m','1381 m','−9903 m'], 0, 'Subtrahieren einer negativen Zahl entspricht hier dem Addieren ihres Betrags.')
+        ]
+      },
+      s41n25:{
+        focus:'Von 18:00 Uhr bis 24:00 Uhr fällt die Temperatur von 2 °C stündlich um 1,5 °C.',
+        questions:[
+          q('Wie viele Stunden liegen zwischen 18:00 Uhr und 24:00 Uhr?', ['6 Stunden','5 Stunden','7 Stunden'], 0, 'Zähle die Stundenintervalle bis Mitternacht.'),
+          q('Wie groß ist die gesamte Temperaturänderung in diesen 6 Stunden?', ['−9 °C','+9 °C','−7 °C'], 0, 'Multipliziere die stündliche Abnahme −1,5 °C mit der Anzahl der Stunden.'),
+          q('Welche Rechnung beschreibt die Temperatur um Mitternacht?', ['2 + (−9)','2 + 9','−2 + 9'], 0, 'Starte bei 2 °C und addiere die gesamte Änderung.'),
+          q('Wie hoch ist die Temperatur um Mitternacht?', ['−7 °C','+11 °C','−9 °C'], 0, 'Berechne 2 − 9.')
+        ]
+      }
+    };
+
+    function q(text, options, correct, hint){ return {text, options, correct, hint}; }
+
+    function helpKind(question){
+      const s=(question.text+' '+(question.hint||'')).toLowerCase();
+      if(/koordinat|x-achse|y-achse|quadrant/.test(s)) return 'coordinates';
+      if(/konto|kontostand|einnahm|ausgab|guthaben|€|euro/.test(s)) return 'money';
+      if(/temperatur|°c|wärmer|kälter/.test(s)) return 'temperature';
+      if(/mitte|halbier|hälfte/.test(s)) return 'middle';
+      if(/zahlengerad|zahlenstrahl|links|rechts|abstand|negativ|positiv|vorzeichen|größer|kleiner|vergleich/.test(s)) return 'numberline';
+      if(/schritt|änderung|zunahme|abnahme|steigt|fällt|hoch|runter/.test(s)) return 'change';
+      if(/klammer|punkt vor strich|multipl|divid|produkt|faktor/.test(s)) return 'calculation';
+      return 'general';
+    }
+
+    function escapeHtml(value){
+      return String(value).replace(/[&<>"']/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));
+    }
+
+    function easyHelpText(question){
+      const kind=helpKind(question);
+      const answer=escapeHtml(question.options[question.correct]);
+      const hint=escapeHtml(question.hint||'');
+      const texts={
+        coordinates:'Lies die Aufgabe jetzt ganz geführt: Zuerst gehst du auf der x-Achse nach links oder rechts, danach auf der y-Achse nach unten oder oben. Das Vorzeichen entscheidet jeweils über die Richtung.',
+        money:'Behandle jede Buchung wie einen Pfeil: Einnahme = Plus, Ausgabe = Minus. Starte beim angegebenen Betrag und arbeite die Buchungen in der genannten Reihenfolge ab.',
+        temperature:'Setze 0 °C als Orientierung. Höher bzw. wärmer bedeutet nach oben/rechts, niedriger bzw. kälter nach unten/links. Dann gehst du genau um den genannten Betrag weiter.',
+        middle:'Bestimme zuerst den ganzen Abstand der beiden Randwerte. Teile diesen Abstand durch 2 und gehe von einem Randwert genau diese halbe Strecke in Richtung des anderen.',
+        numberline:'Markiere gedanklich zuerst die 0. Negative bzw. kleinere Zahlen liegen links, positive bzw. größere rechts. Danach gehst du nur noch die geforderte Anzahl an Schritten oder vergleichst die Lage.',
+        change:'Schreibe Startwert und Veränderung getrennt hin. Plus bedeutet in positive Richtung, Minus in negative Richtung. Führe dann genau diese Bewegung vom Startwert aus.',
+        calculation:'Markiere den Rechenschritt, der zuerst ausgeführt werden muss. Rechne diesen Teil aus, setze das Ergebnis wieder ein und gehe dann weiter.',
+        general:'Nimm nur die Daten, die du für genau diesen Denkschritt brauchst. Formuliere daraus eine kleine Rechnung oder Entscheidung und prüfe sie direkt.'
+      };
+      return `${texts[kind]}${hint?`<br><br><strong>Konkreter Hinweis:</strong> ${hint}`:''}<div class="solution-box"><div class="solution-label">Lösung dieses Denkschritts</div><div class="solution-answer">${answer}</div></div>`;
+    }
+
+    function helperVisual(question){
+      const kind=helpKind(question);
+      const answer=escapeHtml(question.options[question.correct]);
+      const hint=escapeHtml(question.hint||'');
+      if(kind==='coordinates'){
+        return `<div class="helper-visual" aria-label="Geführte Skizze eines Koordinatensystems">
+          <svg viewBox="0 0 420 175" role="img" aria-label="Erst x, dann y">
+            <line x1="48" y1="82" x2="382" y2="82" stroke="currentColor" stroke-width="2"/>
+            <line x1="210" y1="138" x2="210" y2="22" stroke="currentColor" stroke-width="2"/>
+            <path d="M382 82 l-12 -6 v12 z" fill="currentColor"/><path d="M210 22 l-6 12 h12 z" fill="currentColor"/>
+            <text x="386" y="88" font-size="15">x</text><text x="218" y="24" font-size="15">y</text>
+            <path d="M210 124 L292 124 L292 48" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="7 5"/>
+            <circle cx="292" cy="48" r="7" fill="currentColor"/>
+            <text x="226" y="153" font-size="14" font-weight="700">1. x-Richtung</text><text x="300" y="67" font-size="14" font-weight="700">2. y-Richtung</text>
+          </svg><div class="helper-caption">Ergebnis für diesen Schritt: ${answer}</div></div>`;
+      }
+      if(kind==='money'){
+        return `<div class="helper-visual"><div class="mini-steps"><div class="mini-step">Startbetrag</div><div class="mini-arrow">→</div><div class="mini-step">+ Einnahme<br>− Ausgabe</div><div class="mini-arrow">→</div><div class="mini-step"><strong>${answer}</strong></div></div><div class="helper-caption">Arbeite die Geldbewegungen der Reihe nach ab.</div></div>`;
+      }
+      if(kind==='temperature'){
+        return `<div class="helper-visual" aria-label="Geführte Temperaturskala">
+          <svg viewBox="0 0 420 135" role="img" aria-label="Temperatur steigt oder fällt">
+            <line x1="55" y1="67" x2="365" y2="67" stroke="currentColor" stroke-width="2"/>
+            <line x1="210" y1="45" x2="210" y2="89" stroke="currentColor" stroke-width="3"/>
+            <text x="202" y="110" font-size="15">0</text><text x="55" y="39" font-size="14">kälter / negativer</text><text x="278" y="39" font-size="14">wärmer / positiver</text>
+            <path d="M194 91 L103 91" stroke="currentColor" stroke-width="3"/><path d="M103 91 l11 -6 v12 z" fill="currentColor"/>
+            <path d="M226 91 L317 91" stroke="currentColor" stroke-width="3"/><path d="M317 91 l-11 -6 v12 z" fill="currentColor"/>
+          </svg><div class="helper-caption">Richtige Antwort: ${answer}</div></div>`;
+      }
+      if(kind==='middle'){
+        return `<div class="helper-visual" aria-label="Mitte zwischen zwei Werten"><div class="mini-steps"><div class="mini-step">ganzen Abstand finden</div><div class="mini-arrow">→</div><div class="mini-step">Abstand : 2</div><div class="mini-arrow">→</div><div class="mini-step"><strong>${answer}</strong></div></div><div class="helper-caption">Die Mitte liegt von beiden Randwerten gleich weit entfernt.</div></div>`;
+      }
+      if(kind==='numberline'){
+        return `<div class="helper-visual" aria-label="Geführte Zahlengerade">
+          <svg viewBox="0 0 420 125" role="img" aria-label="Links kleiner, rechts größer">
+            <line x1="44" y1="62" x2="376" y2="62" stroke="currentColor" stroke-width="3"/>
+            <path d="M44 62 l12 -7 v14 z" fill="currentColor"/><path d="M376 62 l-12 -7 v14 z" fill="currentColor"/>
+            <line x1="210" y1="45" x2="210" y2="80" stroke="currentColor" stroke-width="3"/>
+            <text x="202" y="102" font-size="15">0</text>
+            <text x="57" y="38" font-size="14" font-weight="700">kleiner / negativ</text><text x="275" y="38" font-size="14" font-weight="700">größer / positiv</text>
+          </svg><div class="helper-caption">Für diesen Denkschritt ist richtig: ${answer}</div></div>`;
+      }
+      if(kind==='change'){
+        return `<div class="helper-visual"><div class="mini-steps"><div class="mini-step">Start</div><div class="mini-arrow">→</div><div class="mini-step">Richtung aus + / −</div><div class="mini-arrow">→</div><div class="mini-step"><strong>${answer}</strong></div></div><div class="helper-caption">${hint}</div></div>`;
+      }
+      if(kind==='calculation'){
+        return `<div class="helper-visual"><div class="mini-steps"><div class="mini-step">1. Rechenregel</div><div class="mini-arrow">→</div><div class="mini-step">2. Zwischenschritt</div><div class="mini-arrow">→</div><div class="mini-step"><strong>${answer}</strong></div></div><div class="helper-caption">${hint}</div></div>`;
+      }
+      return `<div class="helper-visual"><div class="mini-steps"><div class="mini-step">Gegebenes markieren</div><div class="mini-arrow">→</div><div class="mini-step">Hinweis nutzen</div><div class="mini-arrow">→</div><div class="mini-step"><strong>${answer}</strong></div></div><div class="helper-caption">${hint}</div></div>`;
+    }
+
+    const state = {view:'chapters', chapterId:null, taskId:null, partId:null, index:0, timer:null, interval:null};
+    const app = document.getElementById('app');
+
+    function clearTimers(){
+      if(state.timer) clearTimeout(state.timer);
+      if(state.interval) clearInterval(state.interval);
+      state.timer=null; state.interval=null;
+    }
+
+    function shuffleWithCorrect(options, correctIndex){
+      const items = options.map((text,i)=>({text,correct:i===correctIndex}));
+      for(let i=items.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [items[i],items[j]]=[items[j],items[i]]; }
+      return items;
+    }
+
+    function topbar(backFn, label='Zurück'){
+      const bar=document.createElement('div'); bar.className='topbar';
+      if(backFn){
+        const b=document.createElement('button'); b.className='icon-btn'; b.textContent='← '+label; b.onclick=backFn; bar.appendChild(b);
+      }
+      const sp=document.createElement('div'); sp.className='spacer'; bar.appendChild(sp);
+      const home=document.createElement('button'); home.className='icon-btn'; home.textContent='⌂ Start'; home.onclick=()=>{clearTimers(); state.view='chapters'; state.chapterId=state.taskId=state.partId=null; state.index=0; render();};
+      if(state.view!=='chapters') bar.appendChild(home);
+      return bar;
+    }
+
+    function render(){
+      clearTimers();
+      app.innerHTML='';
+      if(state.view==='chapters') return renderChapters();
+      if(state.view==='tasks') return renderTasks();
+      if(state.view==='parts') return renderParts();
+      if(state.view==='flow') return renderFlow();
+    }
+
+    function renderTitle(sub='Tippe auf ein Teilkapitel.'){
+      const h=document.createElement('h1'); h.textContent='Arbeitsplan 3 - rationale Zahlen - Hilfesammlung'; app.appendChild(h);
+      const p=document.createElement('div'); p.className='subtitle'; p.textContent=sub; app.appendChild(p);
+    }
+
+    function renderChapters(){
+      renderTitle('');
+      const stack=document.createElement('div'); stack.className='stack';
+      chapters.forEach(ch=>{
+        const b=document.createElement('button'); b.className='menu-btn';
+        b.innerHTML=`<strong>${ch.title}</strong><span>${ch.tasks.length} Aufgaben aus dem Arbeitsplan</span>`;
+        b.onclick=()=>{state.chapterId=ch.id; state.view='tasks'; render();};
+        stack.appendChild(b);
+      });
+      app.appendChild(stack);
+      footer();
+    }
+
+    function renderTasks(){
+      const ch=chapters.find(c=>c.id===state.chapterId);
+      app.appendChild(topbar(()=>{state.view='chapters'; render();},'Teilkapitel'));
+      renderTitle(ch.title);
+      const stack=document.createElement('div'); stack.className='stack';
+      ch.tasks.forEach(t=>{
+        const b=document.createElement('button'); b.className='task-btn';
+        b.innerHTML=`<strong>${t.label}</strong>${t.note?`<span>${t.note}</span>`:''}`;
+        b.onclick=()=>openTask(t.id);
+        stack.appendChild(b);
+      });
+      app.appendChild(stack); footer();
+    }
+
+    function openTask(taskId){
+      state.taskId=taskId; state.index=0; state.partId=null;
+      const flow=flows[taskId];
+      state.view=flow.parts?'parts':'flow'; render();
+    }
+
+    function taskMeta(){
+      for(const ch of chapters){
+        const t=ch.tasks.find(x=>x.id===state.taskId); if(t) return {ch,t};
+      }
+      return null;
+    }
+
+    function renderParts(){
+      const meta=taskMeta(), flow=flows[state.taskId];
+      app.appendChild(topbar(()=>{state.view='tasks'; render();},'Aufgaben'));
+      const h=document.createElement('h1'); h.textContent=meta.t.label; app.appendChild(h);
+      const p=document.createElement('div'); p.className='subtitle'; p.textContent='Welche Teilaufgabe brauchst du?'; app.appendChild(p);
+      if(flow.sourceWarning){ const n=document.createElement('div'); n.className='source-note'; n.textContent=flow.sourceWarning; app.appendChild(n); }
+      const stack=document.createElement('div'); stack.className='stack'; stack.style.marginTop='16px';
+      Object.entries(flow.parts).forEach(([id,part])=>{
+        const b=document.createElement('button'); b.className='part-btn';
+        b.innerHTML=`<strong>${part.title}</strong><span>${part.focus}</span>`;
+        b.onclick=()=>{state.partId=id; state.index=0; state.view='flow'; render();};
+        stack.appendChild(b);
+      });
+      app.appendChild(stack); footer();
+    }
+
+    function currentFlow(){
+      const root=flows[state.taskId];
+      return state.partId ? root.parts[state.partId] : root;
+    }
+
+    function renderFlow(){
+      const meta=taskMeta(); const root=flows[state.taskId]; const flow=currentFlow();
+      const back=()=>{ if(root.parts){state.view='parts'; state.index=0; render();} else {state.view='tasks'; state.index=0; render();} };
+      app.appendChild(topbar(back, root.parts?'Teilaufgaben':'Aufgaben'));
+
+      const card=document.createElement('section'); card.className='card';
+      const head=document.createElement('div'); head.className='task-head';
+      const grow=document.createElement('div'); grow.className='grow';
+      const h=document.createElement('h2'); h.textContent=meta.t.label+(state.partId?` – ${flow.title}`:''); grow.appendChild(h);
+      if(meta.t.note){ const n=document.createElement('div'); n.className='mini-note'; n.textContent=meta.t.note; grow.appendChild(n); }
+      head.appendChild(grow); card.appendChild(head);
+      if(root.sourceWarning){ const n=document.createElement('div'); n.className='source-note'; n.textContent=root.sourceWarning; card.appendChild(n); }
+      const intro=document.createElement('p'); intro.className='part-intro'; intro.textContent=flow.focus; card.appendChild(intro);
+
+      if(state.index>=flow.questions.length){
+        const s=document.createElement('div'); s.className='success';
+        s.innerHTML=`<div class="star">★</div><h3>Hilfeschritte geschafft!</h3><p>Du hast dich selbst bis zur entscheidenden Antwort vorgearbeitet. Übertrage jetzt deinen Lösungsweg sauber ins Heft bzw. kontrolliere deine Buchaufgabe.</p>`;
+        const b=document.createElement('button'); b.className='primary'; b.textContent='Zur Aufgabenübersicht';
+        b.onclick=()=>{state.view='tasks'; state.index=0; state.partId=null; render();}; s.appendChild(b); card.appendChild(s); app.appendChild(card); footer(); return;
+      }
+
+      const total=flow.questions.length, current=state.index+1;
+      const prog=document.createElement('div'); prog.className='progress-wrap';
+      prog.innerHTML=`<div class="progress-meta"><span>Denkschritt ${current} von ${total}</span><span>${Math.round((state.index/total)*100)} %</span></div><div class="progress"><div style="width:${(state.index/total)*100}%"></div></div>`;
+      card.appendChild(prog);
+
+      const question=flow.questions[state.index];
+      const qEl=document.createElement('div'); qEl.className='question'; qEl.textContent=question.text; card.appendChild(qEl);
+
+      const think=document.createElement('div'); think.className='thinking'; card.appendChild(think);
+      const answers=document.createElement('div'); answers.className='answers'; card.appendChild(answers);
+      const feedback=document.createElement('div'); feedback.className='feedback'; card.appendChild(feedback);
+
+      const helpRow=document.createElement('div'); helpRow.className='help-row'; helpRow.hidden=true;
+      const helpBtn=document.createElement('button'); helpBtn.className='help-btn'; helpBtn.type='button'; helpBtn.textContent='❓ Ich verstehe die Frage nicht'; helpBtn.setAttribute('aria-expanded','false');
+      helpRow.appendChild(helpBtn); card.appendChild(helpRow);
+      const easy=document.createElement('div'); easy.className='easy-help';
+      easy.innerHTML=`<div class="easy-help-title">Ausführliche Hilfe:</div><div class="easy-help-text">${easyHelpText(question)}</div>${helperVisual(question)}`;
+      card.appendChild(easy);
+      helpBtn.onclick=()=>{
+        const open=!easy.classList.contains('show');
+        easy.classList.toggle('show',open);
+        helpBtn.setAttribute('aria-expanded',open?'true':'false');
+        helpBtn.textContent=open?'Hilfe wieder ausblenden':'❓ Ich verstehe die Frage nicht';
+        if(open) setTimeout(()=>easy.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+      };
+
+      app.appendChild(card); footer();
+
+      let remaining=5;
+      think.innerHTML=`Denk erst selbst nach. Antwortmöglichkeiten in <span class="countdown">${remaining}</span>`;
+      state.interval=setInterval(()=>{
+        remaining--;
+        const c=think.querySelector('.countdown'); if(c) c.textContent=Math.max(remaining,0);
+        if(remaining<=0){clearInterval(state.interval); state.interval=null;}
+      },1000);
+      state.timer=setTimeout(()=>{
+        state.timer=null;
+        think.textContent='Wähle jetzt die Antwort, die zu deinem Denkweg passt.';
+        showAnswers(question, answers, feedback);
+        helpRow.hidden=false;
+      },5000);
+    }
+
+    function showAnswers(question, container, feedback){
+      const items=shuffleWithCorrect(question.options, question.correct);
+      items.forEach(item=>{
+        const b=document.createElement('button'); b.className='answer-btn'; b.textContent=item.text;
+        b.onclick=()=>{
+          if(item.correct){
+            Array.from(container.children).forEach(x=>x.disabled=true);
+            b.classList.add('good'); feedback.className='feedback good'; feedback.textContent='Richtig gedacht. Nächster Denkschritt …';
+            setTimeout(()=>{state.index++; render();},700);
+          }else{
+            b.classList.remove('bad'); void b.offsetWidth; b.classList.add('bad');
+            feedback.className='feedback bad'; feedback.textContent='Noch nicht. '+question.hint;
+          }
+        };
+        container.appendChild(b);
+      });
+    }
+
+    function footer(){
+      // bewusst leer – keine technischen oder erklärenden Metatexte in der Schüleransicht
+    }
+
+    render();
+  })();
+  </script>
+</body>
+</html>
